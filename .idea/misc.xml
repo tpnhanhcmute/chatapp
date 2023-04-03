@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/circle.xml" value="0.303" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/header.xml" value="0.1405" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/ic_baseline_import_contacts_24.xml" value="0.224" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.224" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/item_selection.xml" value="0.2815" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/message.xml" value="0.304" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/message_receiver.xml" value="0.187" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/message_sender.xml" value="0.304" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/round.xml" value="0.252" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/search.xml" value="0.304" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/activity_chat_content.xml" value="0.14666666666666667" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/activity_splash.xml" value="0.16666666666666666" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/fragment_call_content.xml" value="0.2866847826086957" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/fragment_chat.xml" value="0.16666666666666666" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/fragment_chat_content.xml" value="0.16666666666666666" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/fragment_chat_list.xml" value="0.16666666666666666" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/fragment_contact.xml" value="0.30052083333333335" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/fragment_setting.xml" value="0.30052083333333335" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/viewholder_chat.xml" value="0.22" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/viewholder_message.xml" value="0.2994791666666667" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/viewholder_message_file.xml" value="0.2994791666666667" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/viewholder_message_image.xml" value="0.30052083333333335" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/viewholder_message_text.xml" value="0.22" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/viewholder_receiver_message_text.xml" value="0.22" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/viewholder_sender_message_text.xml" value="0.22" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/menu/chat_call_menu.xml" value="0.14666666666666667" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/menu/item_menu.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
