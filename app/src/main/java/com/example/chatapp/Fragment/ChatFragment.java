@@ -14,9 +14,6 @@ import com.example.chatapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ChatFragment extends Fragment {
-//    RecyclerView rcChat;
-//    ChatAdapter chatAdapter;
-    //FragmentChatBinding binding;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -2,6 +2,7 @@ package com.example.chatapp.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,15 +54,22 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.MyViewHolder holder, int position) {
         Message message = messageList.get(position);
-        int indexPreMessage = position-1;
-        if(indexPreMessage >= 0){
-            if(messageList.get(indexPreMessage).sender.equals(message.sender)){
-                if(holder.nameSender != null)
+        int indexPrevMessage = position-1;
+        if(holder.nameSender!= null)
+            holder.nameSender.setVisibility(View.VISIBLE);
+
+        if(holder.circleImageViewProfileImageInContentChat!= null){
+            holder.circleImageViewProfileImageInContentChat.setImageResource(R.drawable.ic_launcher_background);
+        }
+        if(indexPrevMessage >=0){
+            if(holder.nameSender != null){
+                if(message.sender.equals(messageList.get(indexPrevMessage).sender)){
                     holder.nameSender.setVisibility(View.GONE);
-                if(holder.circleImageViewProfileImageInContentChat != null)
-                {
+                }
+            }
+            if(holder.circleImageViewProfileImageInContentChat!= null){
+                if(message.sender.equals(messageList.get(indexPrevMessage).sender)){
                     holder.circleImageViewProfileImageInContentChat.setImageDrawable(null);
-                    //holder.circleImageViewProfileImageInContentChat.setImageDrawable(null);
                 }
             }
         }
