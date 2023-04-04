@@ -186,6 +186,7 @@
                         android:src="@drawable/ic_baseline_navigate_next_24" />
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/linearLayoutLogout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center|center"

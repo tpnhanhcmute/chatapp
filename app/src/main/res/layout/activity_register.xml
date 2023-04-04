@@ -91,7 +91,7 @@
                             android:background="@drawable/wireframe_round"
                             android:ems="10"
                             android:hint="Enter your name"
-                            android:inputType="phone"
+                            android:inputType="text"
                             android:minHeight="48dp"
                             android:paddingLeft="30dp"
                             android:textColor="@color/green_gray" />
@@ -118,7 +118,7 @@
                             android:background="@drawable/wireframe_round"
                             android:ems="10"
                             android:hint="Enter your email"
-                            android:inputType="phone"
+                            android:inputType="text"
                             android:minHeight="48dp"
                             android:paddingLeft="30dp"
                             android:textColor="@color/green_gray" />
