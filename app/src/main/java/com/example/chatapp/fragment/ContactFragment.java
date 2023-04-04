@@ -1,4 +1,4 @@
-package com.example.chatapp.Fragment;
+package com.example.chatapp.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
@@ -18,8 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.Manifest;
 
-import com.example.chatapp.Adapter.ContactAdapter;
-import com.example.chatapp.Adapter.MessageAdapter;
+import com.example.chatapp.Adapters.ContactAdapter;
 import com.example.chatapp.Models.Contact;
 import com.example.chatapp.R;
 

@@ -1,8 +1,7 @@
-package com.example.chatapp.Adapter;
+package com.example.chatapp.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.chatapp.Activity.ChatContentActivity;
-import com.example.chatapp.Models.Chat;
+import com.example.chatapp.activity.ChatContentActivity;
+import com.example.chatapp.model.Chat;
 import com.example.chatapp.R;
-import com.example.chatapp.databinding.ActivityChatContentBinding;
 
 import java.util.List;
 

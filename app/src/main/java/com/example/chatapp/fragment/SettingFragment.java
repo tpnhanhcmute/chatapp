@@ -1,4 +1,4 @@
-package com.example.chatapp.Fragment;
+package com.example.chatapp.Fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.chatapp.Activity.LoginActivity;
+import com.example.chatapp.Activitys.LoginActivity;
 import com.example.chatapp.R;
 
 public class SettingFragment extends Fragment {

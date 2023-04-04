@@ -1,4 +1,4 @@
-package com.example.chatapp.Activity;
+package com.example.chatapp.Activitys;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,9 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.chatapp.Adapter.ChatAdapter;
-import com.example.chatapp.Adapter.MessageAdapter;
-import com.example.chatapp.Models.Message;
+import com.example.chatapp.Adapters.MessageAdapter;
+import com.example.chatapp.model.Message;
 import com.example.chatapp.R;
 
 import java.util.ArrayList;

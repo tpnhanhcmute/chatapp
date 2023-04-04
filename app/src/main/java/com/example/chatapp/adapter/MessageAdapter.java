@@ -1,8 +1,7 @@
-package com.example.chatapp.Adapter;
+package com.example.chatapp.Adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.chatapp.Models.Message;
+import com.example.chatapp.model.Message;
 import com.example.chatapp.R;
 
 import java.util.List;

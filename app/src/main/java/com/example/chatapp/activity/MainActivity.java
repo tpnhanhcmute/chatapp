@@ -1,4 +1,4 @@
-package com.example.chatapp.Activity;
+package com.example.chatapp.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -8,9 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.example.chatapp.Fragment.ChatFragment;
-import com.example.chatapp.Fragment.ContactFragment;
-import com.example.chatapp.Fragment.SettingFragment;
+import com.example.chatapp.fragment.ChatFragment;
+import com.example.chatapp.fragment.ContactFragment;
+import com.example.chatapp.fragment.SettingFragment;
 import com.example.chatapp.R;
 import com.example.chatapp.databinding.ActivityMainBinding;
 
