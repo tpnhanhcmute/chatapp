@@ -29,7 +29,7 @@ import java.util.List;
 public class ContactFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private static final String TAG = "TAG";
-    private List<Contact> contactList;
+
     private ContactAdapter contactAdapter;
     private RecyclerView rcContact;
     @Override
@@ -41,13 +41,13 @@ public class ContactFragment extends Fragment {
             ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
             return view;
         }
-        contactList = new ArrayList<Contact>();
+        List<Contact> contactList = new ArrayList<Contact>();
         Cursor cursor = getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
-                @SuppressLint("Range") String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                @SuppressLint("Range") String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                @SuppressLint("Range") String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                 @SuppressLint("Range") String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                 @SuppressLint("Range") String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                 @SuppressLint("Range") String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                 Log.d(TAG, "Contact ID: " + contactId + ", Name: " + contactName +", Phone number"+phoneNumber);
                 Contact contact = new Contact();
                 contact.displayName = contactName;
@@ -57,7 +57,7 @@ public class ContactFragment extends Fragment {
         }
         Mapping(view);
 
-        contactAdapter = new ContactAdapter(this.getContext(), contactList);
+        contactAdapter = new ContactAdapter(getContext(), contactList);
         rcContact.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext(),
@@ -66,9 +66,10 @@ public class ContactFragment extends Fragment {
         rcContact.setLayoutManager(layoutManager);
         rcContact.setAdapter(contactAdapter);
         contactAdapter.notifyDataSetChanged();
+
         return view;
     }
     private void  Mapping(View view){
-        rcContact =(RecyclerView) view.findViewById(R.id.rcContact);
+        rcContact = view.findViewById(R.id.rcContact);
     }
 }

@@ -20,10 +20,6 @@ import java.util.List;
 public class ChatListFragment extends Fragment {
     RecyclerView rcChat;
     ChatAdapter chatAdapter;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
