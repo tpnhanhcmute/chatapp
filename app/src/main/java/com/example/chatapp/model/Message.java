@@ -1,4 +1,4 @@
-package com.example.chatapp.Models;
+package com.example.chatapp.model;
 
 import java.util.Date;
 

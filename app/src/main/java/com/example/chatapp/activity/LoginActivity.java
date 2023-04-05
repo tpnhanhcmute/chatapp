@@ -1,4 +1,4 @@
-package com.example.chatapp.Activitys;
+package com.example.chatapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

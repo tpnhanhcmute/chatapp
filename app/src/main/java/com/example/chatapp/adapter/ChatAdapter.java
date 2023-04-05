@@ -1,4 +1,4 @@
-package com.example.chatapp.Adapters;
+package com.example.chatapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;

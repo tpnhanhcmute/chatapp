@@ -1,4 +1,4 @@
-package com.example.chatapp.Models;
+package com.example.chatapp.model;
 
 public class Contact {
     public String phoneNumber;

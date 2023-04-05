@@ -1,4 +1,4 @@
-package com.example.chatapp.Fragments;
+package com.example.chatapp.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
@@ -18,8 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.Manifest;
 
-import com.example.chatapp.Adapters.ContactAdapter;
-import com.example.chatapp.Models.Contact;
+import com.example.chatapp.adapter.ContactAdapter;
+import com.example.chatapp.model.Contact;
 import com.example.chatapp.R;
 
 import java.util.ArrayList;

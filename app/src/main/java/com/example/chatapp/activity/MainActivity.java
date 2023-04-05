@@ -1,4 +1,4 @@
-package com.example.chatapp.Activitys;
+package com.example.chatapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;

@@ -1,4 +1,4 @@
-package com.example.chatapp.Fragments;
+package com.example.chatapp.fragment;
 
 import android.os.Bundle;
 
@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.chatapp.Adapters.ChatAdapter;
-import com.example.chatapp.Models.Chat;
+import com.example.chatapp.adapter.ChatAdapter;
+import com.example.chatapp.model.Chat;
 import com.example.chatapp.R;
 
 import java.util.ArrayList;

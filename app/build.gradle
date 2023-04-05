@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
+//    id 'com.google.gms.google-services'
 }
 
 android {
@@ -14,7 +16,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildFeatures {
         viewBinding true
     }
@@ -32,6 +33,21 @@ android {
 }
 
 dependencies {
+
+//    classpath 'com.google.gms:google-services:4.3.15'
+//    implementation platform('com.google.firebase:firebase-bom:31.4.0')
+//    implementation 'com.google.firebase:firebase-analytics'
+    //firebase
+    // Network & Retrofit
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    //Gson implementation 'com.google.code.gson:gson:2.10.1'
+    //load ảnh với Glide
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    implementation 'androidx.appcompat:appcompat:1.0.0-alpha3'
+    implementation 'com.google.firebase:firebase-database:20.1.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'

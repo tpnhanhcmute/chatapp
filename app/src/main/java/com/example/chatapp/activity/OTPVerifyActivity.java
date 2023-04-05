@@ -1,4 +1,4 @@
-package com.example.chatapp.Activitys;
+package com.example.chatapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,7 +44,9 @@ public class OTPVerifyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+
             }
         });
         textViewResendOTP.setOnClickListener(new View.OnClickListener() {

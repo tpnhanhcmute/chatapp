@@ -1,4 +1,4 @@
-package com.example.chatapp.Fragments;
+package com.example.chatapp.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.chatapp.Activitys.LoginActivity;
+import com.example.chatapp.activity.EditProfileActivity;
+import com.example.chatapp.activity.LoginActivity;
 import com.example.chatapp.R;
 
 public class SettingFragment extends Fragment {
     LinearLayout linearLayoutLogout;
+    LinearLayout linearLayoutEditProfile;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,6 +35,13 @@ public class SettingFragment extends Fragment {
                 OpenConfirmPopup();
             }
         });
+        linearLayoutEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void OpenConfirmPopup() {
@@ -44,6 +54,7 @@ public class SettingFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }
                 });
@@ -59,5 +70,6 @@ public class SettingFragment extends Fragment {
 
     private void Mapping(View view) {
         linearLayoutLogout = view.findViewById(R.id.linearLayoutLogout);
+        linearLayoutEditProfile = view.findViewById(R.id.linearLayoutEditProfile);
     }
 }
