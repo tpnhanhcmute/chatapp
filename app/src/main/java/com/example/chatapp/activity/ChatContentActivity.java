@@ -2,6 +2,7 @@ package com.example.chatapp.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,18 +20,19 @@ public class ChatContentActivity extends AppCompatActivity {
     private ImageView imageViewBack;
     private MessageAdapter messageAdapter;
     private RecyclerView rcMessage;
+    private EditText editTextMessage;
+    List<Message> messageList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_content);
         Mapping();
-        SetListener();
         LoadData();
-
+        SetListener();
 
     }
     private  void LoadData(){
-        List<Message> messageList = new ArrayList<Message>();
+        messageList = new ArrayList<Message>();
         Message message = new Message();
         Message message1 = new Message();
         message.sender ="nhan";
@@ -91,12 +93,14 @@ public class ChatContentActivity extends AppCompatActivity {
                         false);
         rcMessage.setLayoutManager(layoutManager);
         rcMessage.setAdapter(messageAdapter);
+        rcMessage.scrollToPosition(messageList.size()-1);
         messageAdapter.notifyDataSetChanged();
 
     }
     private  void Mapping(){
         imageViewBack= (ImageView)findViewById(R.id.imageViewBack);
         rcMessage = (RecyclerView) findViewById(R.id.recycleViewMessage);
+        editTextMessage = findViewById(R.id.editTextMessage);
     }
     private  void SetListener(){
         imageViewBack.setOnClickListener(new View.OnClickListener() {
