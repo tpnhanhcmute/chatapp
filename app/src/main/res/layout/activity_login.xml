@@ -52,7 +52,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Enter your 10-digit mobile number to continue."
+                        android:text="Enter your email to continue."
                         android:textColor="@color/white"
                         android:textSize="16dp" />
                 </LinearLayout>
@@ -84,14 +84,14 @@
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/editTextPhone"
+                            android:id="@+id/editTextEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/wireframe_round"
                             android:ems="10"
-                            android:hint="Phone number"
-                            android:inputType="phone"
+                            android:hint="Email"
+                            android:inputType="text"
                             android:minHeight="48dp"
                             android:paddingLeft="30dp"
                             android:textColor="@color/green_gray" />
@@ -103,7 +103,33 @@
                             android:background="@color/light_green"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:text="Phone" />
+                            android:text="Email" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/editPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/wireframe_round"
+                            android:ems="10"
+                            android:hint="Password"
+                            android:inputType="text"
+                            android:minHeight="48dp"
+                            android:paddingLeft="30dp"
+                            android:textColor="@color/green_gray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:background="@color/light_green"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="Password" />
                     </RelativeLayout>
 
                     <Button
