@@ -2,6 +2,7 @@ package com.example.chatapp.service;
 
 import com.example.chatapp.common.RetrofitClient;
 import com.example.chatapp.model.request.LoginRequest;
+import com.example.chatapp.model.request.LogoutRequest;
 import com.example.chatapp.model.request.RecallMessageRequest;
 import com.example.chatapp.model.request.RegisterRequest;
 import com.example.chatapp.model.request.ResendOTPRequest;
@@ -25,8 +26,14 @@ public interface APIService {
     @POST("user/login")
     Callback<ResponseModel> login(@Body LoginRequest request);
 
+    @POST("user/logout")
+    Callback<ResponseModel> logout(@Body LogoutRequest request);
+
     @POST("user/register")
     Callback<ResponseModel> register(@Body RegisterRequest request);
+
+    @POST("user/update")
+    Callback<ResponseModel> updateInfo(@Body UpdateInfoRequest request);
 
     @POST("common/resendOtp")
     Callback<ResponseModel> resendOTP(@Body ResendOTPRequest request);
@@ -34,12 +41,11 @@ public interface APIService {
     @POST("common/authenticateOtp")
     Callback<ResponseModel> authenticate(@Body UserRequest request);
 
-    @POST("user/update")
-    Callback<ResponseModel> updateInfo(@Body UpdateInfoRequest request);
-
     @POST("message/sendMessage")
     Callback<ResponseModel> sendMessage(@Body SendMessageRequest request);
 
     @POST("message/recallMessage")
     Callback<ResponseModel> recallMessage(@Body RecallMessageRequest request);
+
+
 }
