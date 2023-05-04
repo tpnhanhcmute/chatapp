@@ -47,7 +47,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
      // check if is user and type content
         SharedPreferences sharedPreferences =  context.getSharedPreferences("MyPreferences",Context.MODE_PRIVATE);
         Message message = messageList.get(position);
-        return message.sender.equals(sharedPreferences.getString("localUser",""))?MESSAGE_SENDER:MESSAGE_RECEIVER;
+        return message.senderID.equals(sharedPreferences.getString("localUser",""))?MESSAGE_SENDER:MESSAGE_RECEIVER;
 
     }
     @Override
@@ -62,12 +62,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         }
         if(indexPrevMessage >=0){
             if(holder.nameSender != null){
-                if(message.sender.equals(messageList.get(indexPrevMessage).sender)){
+                if(message.senderID.equals(messageList.get(indexPrevMessage).senderID)){
                     holder.nameSender.setVisibility(View.GONE);
                 }
             }
             if(holder.circleImageViewProfileImageInContentChat!= null){
-                if(message.sender.equals(messageList.get(indexPrevMessage).sender)){
+                if(message.senderID.equals(messageList.get(indexPrevMessage).senderID)){
                     holder.circleImageViewProfileImageInContentChat.setImageDrawable(null);
                 }
             }

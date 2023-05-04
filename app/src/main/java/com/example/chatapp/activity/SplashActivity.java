@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.chatapp.R;
+import com.example.chatapp.service.FirebaseService;
 
 public class SplashActivity extends AppCompatActivity {
     private final  int delayChangeActivity= 2000;
@@ -13,6 +14,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        Intent intent = new Intent(SplashActivity.this, FirebaseService.class);
+        startService(intent);
         ChangeActivity();
     }
 
