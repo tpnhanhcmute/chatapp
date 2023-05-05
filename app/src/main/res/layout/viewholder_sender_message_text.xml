@@ -1,25 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
 >
     <LinearLayout
         android:layout_alignParentRight="true"
-        android:background="@drawable/message_sender"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:maxWidth = "250sp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:background="@drawable/message_sender"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:paddingRight="4dp"
-            android:paddingLeft="4dp"
-            android:text="senderTui tên là Trần Phước Nhân là sinh viên UTE. Hân hạnh được làm quen với bạn"
-            />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textViewMessageContent"
+                android:maxWidth = "250sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:paddingRight="4dp"
+                android:paddingLeft="4dp"
+                android:text="senderTui tên là Trần Phước Nhân là sinh viên UTE. Hân hạnh được làm quen với bạn"
+                />
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/imageViewPic"
+                android:layout_width="250dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/relativeLayoutFile"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="20dp">
+                <ImageView
+                    android:id="@+id/imageViewDownload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_round_download_24" />
+                <TextView
+                    android:id="@+id/textViewFileUrl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize = "10dp"
+                    android:layout_marginLeft = "20dp"
+                    android:text="FileUrl" />
+            </LinearLayout>
+        </LinearLayout>
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginRight="10dp"
+           android:layout_alignParentRight="true"
+           android:layout_gravity="right">
+           <ImageView
+               android:id="@+id/imageViewSending"
+               android:visibility="gone"
+
+               android:layout_gravity="center|right"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               app:srcCompat="@drawable/ic_baseline_output_24" />
+           <TextView
+               android:id="@+id/textViewTime"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:paddingRight="4dp"
+               android:layout_gravity="right"
+               android:text="12:06"
+               android:textSize="10sp" />
+       </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

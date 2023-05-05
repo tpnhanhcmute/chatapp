@@ -2,12 +2,12 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         app:cardBackgroundColor="@color/white"
         >
         <RelativeLayout
@@ -17,7 +17,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:orientation="horizontal">
@@ -25,8 +25,9 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:id="@+id/profile_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_launcher_background"
                     app:civ_border_color="@color/white_green"
                     app:civ_border_width="2dp" />
@@ -50,23 +51,25 @@
                                 android:layout_weight="1"
                                 android:gravity="left|bottom"
                                 android:text="Trần Phước Nhân"
-                                android:textSize="18sp" />
+                                android:textSize="17sp" />
                             <TextView
                                 android:id="@+id/textViewTime"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="right|bottom"
                                 android:layout_marginRight="10dp"
-                                android:layout_weight="2"
+                                android:layout_weight="1"
+                                android:textSize ="12dp"
                                 android:text="TextView" />
                         </LinearLayout>
                         <TextView
                             android:gravity=""
                             android:id="@+id/textViewLastMessage"
-                            android:layout_width="82dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
+                            android:textSize ="12dp"
                             android:text="TextView" />
                     </LinearLayout>
                 </LinearLayout>

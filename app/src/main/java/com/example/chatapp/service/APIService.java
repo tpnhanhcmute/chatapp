@@ -11,6 +11,7 @@ import com.example.chatapp.model.request.UpdateInfoRequest;
 import com.example.chatapp.model.request.UserRequest;
 import com.example.chatapp.model.response.ResponseModel;
 
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -24,28 +25,30 @@ public interface APIService {
     }
 
     @POST("user/login")
-    Callback<ResponseModel> login(@Body LoginRequest request);
+    Call<ResponseModel> login(@Body LoginRequest request);
 
     @POST("user/logout")
-    Callback<ResponseModel> logout(@Body LogoutRequest request);
+    Call<ResponseModel>  logout(@Body LogoutRequest request);
 
     @POST("user/register")
-    Callback<ResponseModel> register(@Body RegisterRequest request);
+    Call<ResponseModel>  register(@Body RegisterRequest request);
 
     @POST("user/update")
-    Callback<ResponseModel> updateInfo(@Body UpdateInfoRequest request);
+    Call<ResponseModel>  updateInfo(@Body UpdateInfoRequest request);
 
     @POST("common/resendOtp")
-    Callback<ResponseModel> resendOTP(@Body ResendOTPRequest request);
+    Call<ResponseModel>  resendOTP(@Body ResendOTPRequest request);
 
     @POST("common/authenticateOtp")
-    Callback<ResponseModel> authenticate(@Body UserRequest request);
+    Call<ResponseModel>  authenticate(@Body UserRequest request);
 
     @POST("message/sendMessage")
-    Callback<ResponseModel> sendMessage(@Body SendMessageRequest request);
+    Call<ResponseModel>  sendMessage(@Body SendMessageRequest request);
 
     @POST("message/recallMessage")
-    Callback<ResponseModel> recallMessage(@Body RecallMessageRequest request);
+    Call<ResponseModel>  recallMessage(@Body RecallMessageRequest request);
 
+    @POST("contact/getContacts")
+    Call<ResponseModel> getContacts(@Body UserRequest request);
 
 }

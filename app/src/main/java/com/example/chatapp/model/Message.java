@@ -6,6 +6,10 @@ public class Message {
     public String senderID;
     public  String content;
     public  boolean isImage;
+
     public  String fileUrl;
-    public Date date;
+    public String date;
+    public  boolean isRecall;
+
+    public  boolean isSending;
 }
