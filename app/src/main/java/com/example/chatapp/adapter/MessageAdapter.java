@@ -1,26 +1,44 @@
 package com.example.chatapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.chatapp.common.FileType;
 import com.example.chatapp.common.SharedPreference;
 import com.example.chatapp.model.Message;
 import com.example.chatapp.R;
 import com.example.chatapp.model.User;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder>{
     public final int MESSAGE_RECEIVER =1;
@@ -57,6 +75,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         String userID = SharedPreference.getInstance(context).getUser().userID;
         Message message = messageList.get(position);
         return message.senderID.equals(userID)?MESSAGE_SENDER:MESSAGE_RECEIVER;
+    }
+    public  int GetViewType(Message message){
+        String userID = SharedPreference.getInstance(context).getUser().userID;
+        return message.senderID.equals(userID)?MESSAGE_SENDER:MESSAGE_RECEIVER;
 
     }
     @Override
@@ -81,14 +103,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
                 }
             }
         }
-
         if(holder.textViewMessageContent != null){
+            holder.textViewMessageContent.setVisibility(View.VISIBLE);
             holder.textViewMessageContent.setText(message.content);
+        }else {
+            holder.textViewMessageContent.setVisibility(View.GONE);
         }
         if(holder.textViewTime != null){
             holder.textViewTime.setText(message.date);
 
         }
+
+        holder.imageViewPic.setVisibility(View.GONE);
+        holder.relativeLayoutFile.setVisibility(View.GONE);
+        holder.videoView.setVisibility(View.GONE);
+        holder.relativeLayoutFile.setVisibility(View.GONE);
        if(holder.imageViewSending != null){
            if(message.isSending){
                holder.imageViewSending.setVisibility(View.VISIBLE);
@@ -96,22 +125,73 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
                holder.imageViewSending.setVisibility(View.GONE);
            }
        }
-       if( message.fileUrl != null){
-            if(!message.fileUrl.equals(""))
-            {
-                if(message.isImage){
-                    holder.imageViewPic.setVisibility(View.VISIBLE);
-                    Glide.with(context).load(message.fileUrl).into(holder.imageViewPic);
-                }else {
-                    holder.relativeLayoutFile.setVisibility(View.VISIBLE);
-                    holder.textViewFileUrl.setText(message.fileUrl);
-                }
-                return;
-            }
+       if(message.uri != null){
+           if(message.fileType.equals(FileType.IMAGE.name())){
+               holder.imageViewPic.setVisibility(View.VISIBLE);
+               try {
+                   Bitmap bitmap =
+                           MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(message.uri));
+                   holder.imageViewPic.setImageBitmap(bitmap);
+
+               } catch (FileNotFoundException e) {
+                   e.printStackTrace();
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
+                   //holder.imageViewPic.setImageBitmap(bitmap);
+           }
+           return;
+       }
+       else {
+           if( message.fileUrl != null){
+               if(!message.fileUrl.equals(""))
+               {
+                   if(message.fileType.equals(FileType.IMAGE.name())){
+                       holder.imageViewPic.setVisibility(View.VISIBLE);
+                       Glide.with(context).load(message.fileUrl).into(holder.imageViewPic);
+                   }
+                   if(message.fileType.equals((FileType.VIDEO.name()))){
+
+                       Uri videoUri = Uri.parse(message.fileUrl);
+                       holder.videoView.setVideoURI(videoUri);
+                       holder.videoView.setVisibility(View.VISIBLE);
+                       holder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                           @Override
+                           public void onPrepared(MediaPlayer mp) {
+                               holder.videoView.start();
+                               holder.videoView.pause();
+                           }
+                       });
+                       holder.videoView.setOnClickListener(new View.OnClickListener() {
+                           @Override
+                           public void onClick(View v) {
+                               if (holder.videoView.isPlaying()) {
+                                   holder.videoView.pause();
+                               } else {
+                                   holder.videoView.start();
+                               }
+                           }
+                       });
+                   }
+                   if(message.fileType.equals(FileType.OTHER.name()))
+                   {
+                       holder.relativeLayoutFile.setVisibility(View.VISIBLE);
+                       holder.textViewFileUrl.setText("Click to download file");
+                       holder.imageViewDownload.setOnClickListener(new View.OnClickListener() {
+                           @Override
+                           public void onClick(View v) {
+                               String url = message.fileUrl;
+                               Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                               context.startActivity(intent);
+                           }
+                       });
+                   }
+                   return;
+               }
+           }
        }
 
-        holder.imageViewPic.setVisibility(View.GONE);
-        holder.relativeLayoutFile.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -120,19 +200,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder  {
-        private  String messageID;
-        private  int viewType;
-        private TextView nameSender;
-        private  TextView textViewMessageContent;
-        private TextView textViewTime;
-        private  ImageView imageViewPic;
-        private LinearLayout relativeLayoutFile;
-        private  ImageView imageViewDownload;
-        private  TextView textViewFileUrl;
-        private de.hdodenhof.circleimageview.CircleImageView circleImageViewProfileImageInContentChat;
-
+        public   String messageID;
+        public  int viewType;
+        public TextView nameSender;
+        public  TextView textViewMessageContent;
+        public TextView textViewTime;
+        public  ImageView imageViewPic;
+        public LinearLayout relativeLayoutFile;
+        public  ImageView imageViewDownload;
+        public  TextView textViewFileUrl;
+        public de.hdodenhof.circleimageview.CircleImageView circleImageViewProfileImageInContentChat;
+        public VideoView videoView;
         //Sender
-        private ImageView imageViewSending;
+        public ImageView imageViewSending;
 
         public MyViewHolder(@NonNull View itemView, int viewType) {
             super(itemView);
@@ -143,6 +223,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             relativeLayoutFile = itemView.findViewById(R.id.relativeLayoutFile);
             imageViewDownload = itemView.findViewById(R.id.imageViewDownload);
             textViewFileUrl = itemView.findViewById((R.id.textViewFileUrl));
+
+            videoView = itemView.findViewById(R.id.videoView);
              switch (viewType){
                  case MESSAGE_RECEIVER:
                      nameSender = (TextView)itemView.findViewById(R.id.senderName);

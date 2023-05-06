@@ -172,7 +172,6 @@ public class EditProfileActivity  extends AppCompatActivity {
                 if(avatarUrl != null) user.avatarUrl = updateInfoRequest.avatarUrl;
 
                 SharedPreference.getInstance(getApplicationContext()).setUser(user);
-
             }
 
             @Override

@@ -121,6 +121,7 @@
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:padding="20dp">
+
                      <de.hdodenhof.circleimageview.CircleImageView
                          android:id="@+id/imageViewHolderSelect"
                          android:layout_alignParentRight="true"
@@ -130,12 +131,26 @@
                          android:src="@drawable/ic_launcher_background"
                          app:civ_border_color="@color/white_green"
                          app:civ_border_width="2dp" />
-                     <ImageView
+                     <LinearLayout
                          android:layout_alignParentRight="true"
-                         android:id="@+id/imageViewCancelSelectImage"
                          android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         app:srcCompat="@drawable/ic_outline_cancel_24" />
+                         android:layout_height="wrap_content">
+                         <TextView
+                             android:padding="5dp"
+                             android:background="@drawable/search"
+                             android:id="@+id/textViewFileName"
+                             android:layout_alignParentRight="true"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginRight="10dp"
+                             android:text="TextVidđaaasasasasaasasaaew" />
+                         <ImageView
+                             android:layout_alignParentRight="true"
+                             android:id="@+id/imageViewCancelSelectImage"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             app:srcCompat="@drawable/ic_outline_cancel_24" />
+                     </LinearLayout>
 
                  </RelativeLayout>
 

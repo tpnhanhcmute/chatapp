@@ -44,12 +44,18 @@ import com.example.chatapp.model.request.SendMessageRequest;
 import com.example.chatapp.model.response.ResponseModel;
 import com.example.chatapp.service.APIService;
 import com.example.chatapp.service.FirebaseService;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +95,7 @@ public class ChatContentActivity extends AppCompatActivity {
     private RelativeLayout relativeLayoutSelect;
     private  ImageView imageViewHolderSelect;
     private  ImageView imageViewCancelSelectImage;
+    private  TextView textViewFileName;
     List<Message> messageList;
 
     private int previousHeight = 0;
@@ -115,7 +122,6 @@ public class ChatContentActivity extends AppCompatActivity {
         childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Log.d("BUG", snapshot.getKey());
                 Message message = snapshot.getValue(Message.class);
                 messageList.add(message);
                 if(lastMessage != null)
@@ -125,6 +131,7 @@ public class ChatContentActivity extends AppCompatActivity {
                 rcMessage.scrollToPosition(messageList.size()-1);
                 messageAdapter.notifyDataSetChanged();
             }
+
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -147,10 +154,9 @@ public class ChatContentActivity extends AppCompatActivity {
             }
         };
     }
-
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onBackPressed() {
+        super.onBackPressed();
         User user = SharedPreference.getInstance(getApplicationContext()).getUser();
         FirebaseService.getInstance().UnRegisterOnMessage(user.userID, chat.messageID,childEventListener);
     }
@@ -184,6 +190,7 @@ public class ChatContentActivity extends AppCompatActivity {
         relativeLayoutSelect =findViewById(R.id.relativeLayoutSelect);
         imageViewHolderSelect =findViewById(R.id.imageViewHolderSelect);
         imageViewCancelSelectImage =findViewById(R.id.imageViewCancelSelectImage);
+        textViewFileName = findViewById(R.id.textViewFileName);
     }
     private  void SetListener(){
         imageViewBack.setOnClickListener(new View.OnClickListener() {
@@ -208,11 +215,58 @@ public class ChatContentActivity extends AppCompatActivity {
         imageViewSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 String content = editTextMessage.getText().toString();
                 if(TextUtils.isEmpty(content)){return;}
-                SendMessage(content);
+                SendMessageRequest sendMessageRequest = new SendMessageRequest();
+                sendMessageRequest.senderID = SharedPreference.getInstance(getApplicationContext()).getUser().userID;
+                sendMessageRequest.receiverID = chat.userID;
+                Message message = new Message();
+                message.content = content;
+                sendMessageRequest.message = message;
+                message.senderID = sendMessageRequest.senderID;
+                if(fileType != null){
+                    message.fileType =fileType.name();
+                }
+                if(mUri != null){
+
+                    OnSuccessListener<String> onSuccessListener = new OnSuccessListener<String>() {
+                        @Override
+                        public void onSuccess(String url) {
+                            message.fileUrl = url;
+                            SendMessage(sendMessageRequest);
+                        }
+                    };
+                    OnFailureListener onFailureListener = new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    };
+                    FirebaseService.getInstance().UploadFile(mUri,fileType,sendMessageRequest.senderID, onSuccessListener, onFailureListener);
+                }else {
+
+                    SendMessage(sendMessageRequest);
+                }
+                editTextMessage.setText("");
+                relativeLayoutSelect.setVisibility(View.GONE);
+
+                try {
+                    lastMessage = message.clone();
+                    if(mUri != null){
+                        lastMessage.uri = mUri.toString();
+                    }
+                    lastMessage.fileUrl = null;
+                    lastMessage.isSending = true;
+                    lastMessage.senderID = sendMessageRequest.senderID;
+                    messageList.add(lastMessage);
+                    rcMessage.scrollToPosition(messageList.size()-1);
+                    messageAdapter.notifyDataSetChanged();
+
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+                mUri = null;
+
             }
         });
         imageViewAttachFile.setOnClickListener(new View.OnClickListener() {
@@ -230,15 +284,9 @@ public class ChatContentActivity extends AppCompatActivity {
         });
     }
 
-    private void SendMessage(String content) {
-        Message message = new Message();
-        message.content = content;
-        message.senderID = SharedPreference.getInstance(getApplicationContext()).getUser().userID;
-        message.isImage = false;
-        SendMessageRequest sendMessageRequest = new SendMessageRequest();
-        sendMessageRequest.message = message;
-        sendMessageRequest.senderID = message.senderID;
-        sendMessageRequest.receiverID =chat.userID;
+    private void SendMessage(SendMessageRequest sendMessageRequest) {
+        sendMessageRequest.message.isSending = false;
+        sendMessageRequest.message.uri = null;
         APIService apiService = APIService.getAPIService();
         apiService.sendMessage(sendMessageRequest).enqueue(new Callback<ResponseModel>() {
             @Override
@@ -260,12 +308,6 @@ public class ChatContentActivity extends AppCompatActivity {
 
             }
         });
-        editTextMessage.setText("");
-        lastMessage = message;
-        message.isSending = true;
-        messageList.add(message);
-        rcMessage.scrollToPosition(messageList.size()-1);
-        messageAdapter.notifyDataSetChanged();
     }
 
     private void UploadImage() {
@@ -304,10 +346,13 @@ public class ChatContentActivity extends AppCompatActivity {
                         }
                         mUri = data.getData();
                         String mimeType = getContentResolver().getType(mUri);
+                        imageViewHolderSelect.setVisibility(View.GONE);
+                        textViewFileName.setVisibility(View.GONE);
                         if(mimeType.startsWith("image/")){
-                            fileType =FileType.IMAGE;
+                            fileType = FileType.IMAGE;
                             try {
                                 relativeLayoutSelect.setVisibility(View.VISIBLE);
+                                imageViewHolderSelect.setVisibility(View.VISIBLE);
                                 Bitmap bitmap =
                                         MediaStore.Images.Media.getBitmap(getContentResolver(), mUri);
                                 imageViewHolderSelect.setImageBitmap(bitmap);
@@ -321,7 +366,22 @@ public class ChatContentActivity extends AppCompatActivity {
                             }
                         }
                         else {
-                            fileType = FileType.OTHER;
+                            relativeLayoutSelect.setVisibility(View.VISIBLE);
+                            textViewFileName.setVisibility(View.VISIBLE);
+                            File file = new File(mUri.getPath());
+                            String fileName = file.getName();
+                            textViewFileName.setText(fileName);
+//                            if(mimeType.startsWith("audio/")){
+//
+//                                fileType = FileType.AUDIO;
+//                                return;
+//                            }
+                            if(mimeType.startsWith("video")){
+
+                                fileType = FileType.VIDEO;
+                                return;
+                            }
+                            fileType =FileType.OTHER;
                         }
                         Log.d("IMAGE",mUri.getPath());
                     }
