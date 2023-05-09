@@ -6,18 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ChatFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <androidx.cardview.widget.CardView
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="135dp"
             >
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/header">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/search"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_weight="3"
+                        android:src="@drawable/ic_launcher_background"
+                        app:civ_border_color="@color/white_green"
+                        app:civ_border_width="2dp" />
+
+                    <EditText
+                        android:id="@+id/editTextSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="Search by email and number"
+                        android:inputType="textPersonName" />
+                    <ImageButton
+                        android:id="@+id/imageButtonSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="#00FFFFFF"
+                        android:contentDescription="@string/app_name"
+                        android:minHeight="48dp"
+                        android:src="@drawable/ic_baseline_search_24"
+                        app:itemIconTint="@drawable/item_selection"
+                        app:itemTextColor="@drawable/item_selection"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </LinearLayout>
 
                 <com.google.android.material.bottomnavigation.BottomNavigationView
                     android:id="@+id/chat_call_navigation"
@@ -30,57 +74,29 @@
                     app:itemIconTint="@drawable/item_selection"
                     app:itemRippleColor="@android:color/transparent"
                     app:itemTextAppearance="?android:attr/textAppearanceLarge"
-                    app:menu="@menu/chat_call_menu" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="15dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/search"
-                    >
+                    app:menu="@menu/chat_call_menu">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_weight="3"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:id="@+id/profile_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_launcher_background"
-                        app:civ_border_color="@color/white_green"
-                        app:civ_border_width="2dp" />
-
-                    <EditText
-                        android:id="@+id/editTextSearch"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:hint="Search by name and number"
-                        android:inputType="textPersonName" />
-
-                    <ImageButton
-                        android:id="@+id/imageButtonSearch"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
-                        android:background="#00FFFFFF"
-                        android:contentDescription="@string/app_name"
-                        android:minHeight="48dp"
-                        android:src="@drawable/ic_baseline_search_24"
-                        app:itemIconTint="@drawable/item_selection"
-                        app:itemTextColor="@drawable/item_selection"
-                        tools:ignore="TouchTargetSizeCheck"/>
-
-                </LinearLayout>
+                </com.google.android.material.bottomnavigation.BottomNavigationView>
 
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/frame_in_chat_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_marginTop="135dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcListSearch"
+            android:layout_marginTop="95dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search"
+            android:layout_marginRight ="15dp"
+            android:layout_marginLeft ="15dp"
+            android:layout_weight="3"
+            />
+
+    </RelativeLayout>
 </FrameLayout>

@@ -39,14 +39,15 @@
                         android:orientation="vertical">
                         <LinearLayout android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:layout_weight="1.5"
+
                             android:orientation="horizontal">
                             <TextView
                                 android:textStyle="bold|italic"
                                 android:id="@+id/textViewDisplayName"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
+                                android:layout_weight="2"
                                 android:gravity="left|bottom"
                                 android:text="Trần Phước Nhân"
                                 android:textSize="18sp" />
@@ -54,11 +55,21 @@
                         </LinearLayout>
                         <TextView
                             android:gravity=""
+                            android:id="@+id/textViewEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight="2"
+                            android:textSize="10sp"
+                            android:text="tpnhan12a1@gmail.com" />
+                        <TextView
+                            android:gravity=""
                             android:id="@+id/textViewPhoneNumber"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginRight="8dp"
-                            android:layout_weight="1"
+                            android:textSize="10sp"
+                            android:layout_weight="2"
                             android:text="0367842734" />
                     </LinearLayout>
                 </LinearLayout>

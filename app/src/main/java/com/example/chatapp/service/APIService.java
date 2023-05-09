@@ -6,6 +6,7 @@ import com.example.chatapp.model.request.LogoutRequest;
 import com.example.chatapp.model.request.RecallMessageRequest;
 import com.example.chatapp.model.request.RegisterRequest;
 import com.example.chatapp.model.request.ResendOTPRequest;
+import com.example.chatapp.model.request.SearchRequest;
 import com.example.chatapp.model.request.SendMessageRequest;
 import com.example.chatapp.model.request.UpdateInfoRequest;
 import com.example.chatapp.model.request.UserRequest;
@@ -50,5 +51,8 @@ public interface APIService {
 
     @POST("contact/getContacts")
     Call<ResponseModel> getContacts(@Body UserRequest request);
+
+    @POST("contact/search")
+    Call<ResponseModel> search(@Body SearchRequest request);
 
 }
