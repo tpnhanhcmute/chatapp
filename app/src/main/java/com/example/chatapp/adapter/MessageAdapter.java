@@ -46,11 +46,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     private Context context;
     private List<Message> messageList;
     private  String otherName;
+    private  String otherAvatarUrl;
 
-    public MessageAdapter(Context context, List<Message> messageList,String otherName) {
+    public MessageAdapter(Context context, List<Message> messageList,String otherName,String avatarUrl) {
         this.context = context;
         this.messageList = messageList;
         this.otherName = otherName;
+        this.otherAvatarUrl = avatarUrl;
     }
 
     @NonNull
@@ -87,14 +89,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         int indexPrevMessage = position-1;
         if(holder.nameSender!= null)
             holder.nameSender.setVisibility(View.VISIBLE);
-
-        if(holder.circleImageViewProfileImageInContentChat!= null){
-            holder.circleImageViewProfileImageInContentChat.setImageResource(R.drawable.ic_launcher_background);
+        if(holder.circleImageViewProfileImageInContentChat != null){
+            Glide.with(context).load(otherAvatarUrl).into(holder.circleImageViewProfileImageInContentChat);
         }
         if(indexPrevMessage >=0){
             if(holder.nameSender != null){
                 if(message.senderID.equals(messageList.get(indexPrevMessage).senderID)){
                     holder.nameSender.setVisibility(View.GONE);
+                }
+                else {
+                    holder.nameSender.setVisibility(View.VISIBLE);
+                    holder.nameSender.setText(otherName);
                 }
             }
             if(holder.circleImageViewProfileImageInContentChat!= null){
@@ -203,6 +208,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         public   String messageID;
         public  int viewType;
         public TextView nameSender;
+
         public  TextView textViewMessageContent;
         public TextView textViewTime;
         public  ImageView imageViewPic;
@@ -228,6 +234,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
              switch (viewType){
                  case MESSAGE_RECEIVER:
                      nameSender = (TextView)itemView.findViewById(R.id.senderName);
+
                      circleImageViewProfileImageInContentChat = (de.hdodenhof.circleimageview.CircleImageView) itemView.findViewById(R.id.profile_image_in_content_chat);
                      break;
                  case MESSAGE_SENDER:

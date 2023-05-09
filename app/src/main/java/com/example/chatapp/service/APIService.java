@@ -3,6 +3,7 @@ package com.example.chatapp.service;
 import com.example.chatapp.common.RetrofitClient;
 import com.example.chatapp.model.request.LoginRequest;
 import com.example.chatapp.model.request.LogoutRequest;
+import com.example.chatapp.model.request.MapPhoneNumberRequest;
 import com.example.chatapp.model.request.RecallMessageRequest;
 import com.example.chatapp.model.request.RegisterRequest;
 import com.example.chatapp.model.request.ResendOTPRequest;
@@ -54,5 +55,8 @@ public interface APIService {
 
     @POST("contact/search")
     Call<ResponseModel> search(@Body SearchRequest request);
+
+    @POST("contact/mapPhoneNumber")
+    Call<ResponseModel> mapPhoneNumber(@Body MapPhoneNumberRequest request);
 
 }

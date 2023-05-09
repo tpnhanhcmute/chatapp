@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.example.chatapp.adapter.MessageAdapter;
 import com.example.chatapp.common.Const;
@@ -59,6 +60,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -96,6 +98,7 @@ public class ChatContentActivity extends AppCompatActivity {
     private  ImageView imageViewHolderSelect;
     private  ImageView imageViewCancelSelectImage;
     private  TextView textViewFileName;
+    private CircleImageView profile_image;
     List<Message> messageList;
 
     private int previousHeight = 0;
@@ -103,7 +106,6 @@ public class ChatContentActivity extends AppCompatActivity {
     ChildEventListener childEventListener;
     Uri mUri;
     FileType fileType;
-
     Message lastMessage;
     @RequiresApi(api = 33)
     @Override
@@ -165,10 +167,11 @@ public class ChatContentActivity extends AppCompatActivity {
     public  void LoadData(){
         chat = (Chat) getIntent().getSerializableExtra(Const.CHAT);
         textViewDisplayNameInChat.setText(chat.name);
+        Glide.with(getApplicationContext()).load(chat.avatarUrl).into(profile_image);
     }
     private  void LoadListMessage(){
         messageList = new ArrayList<Message>();
-        messageAdapter = new MessageAdapter(this, messageList,chat.name);
+        messageAdapter = new MessageAdapter(this, messageList,chat.name, chat.avatarUrl);
         rcMessage.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getApplicationContext(),
@@ -191,6 +194,7 @@ public class ChatContentActivity extends AppCompatActivity {
         imageViewHolderSelect =findViewById(R.id.imageViewHolderSelect);
         imageViewCancelSelectImage =findViewById(R.id.imageViewCancelSelectImage);
         textViewFileName = findViewById(R.id.textViewFileName);
+        profile_image = findViewById(R.id.profile_image);
     }
     private  void SetListener(){
         imageViewBack.setOnClickListener(new View.OnClickListener() {
