@@ -15,9 +15,9 @@ public class DialogManager {
     public static DialogManager GetInstance(Activity activity){
         if(dialogManager == null){
             dialogManager = new DialogManager();
-            _mCustomDialog = new Dialog(activity);
-            _mCustomDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            _mCustomDialog.setContentView(R.layout.custom_dialog);
+            dialogManager._mCustomDialog = new Dialog(activity);
+            dialogManager._mCustomDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialogManager._mCustomDialog.setContentView(R.layout.custom_dialog);
         }
         return dialogManager;
     }

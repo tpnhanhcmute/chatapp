@@ -118,7 +118,7 @@
                             android:background="@drawable/wireframe_round"
                             android:ems="10"
                             android:hint="Enter your email"
-                            android:inputType="text"
+                            android:inputType="textEmailAddress"
                             android:minHeight="48dp"
                             android:paddingLeft="30dp"
                             android:textColor="@color/green_gray" />
@@ -145,7 +145,7 @@
                             android:background="@drawable/wireframe_round"
                             android:ems="10"
                             android:hint="Enter your password"
-                            android:inputType="phone"
+                            android:inputType="textPassword"
                             android:minHeight="48dp"
                             android:paddingLeft="30dp"
                             android:textColor="@color/green_gray" />
@@ -158,6 +158,16 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:text="Password" />
+
+                        <ImageView
+                            android:id="@+id/imageViewEye"
+                            android:layout_marginTop="22dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_baseline_remove_red_eye_24_negative" />
+
                     </RelativeLayout>
                     <Button
                         android:id="@+id/btnRegister"

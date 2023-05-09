@@ -5,7 +5,9 @@
       <map>
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/button.xml" value="0.299" />
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/circle.xml" value="0.303" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/floating.xml" value="0.2355" />
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/header.xml" value="0.1405" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/holder_recall_message.xml" value="0.2355" />
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.146" />
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/ic_baseline_attach_file_24.xml" value="0.146" />
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/drawable/ic_baseline_branding_watermark_24.xml" value="0.146" />
@@ -38,6 +40,7 @@
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/fragment_chat_list.xml" value="0.16666666666666666" />
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/fragment_contact.xml" value="0.1" />
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/fragment_setting.xml" value="0.14666666666666667" />
+        <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/recall_message_dialog.xml" value="0.22916666666666666" />
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/viewholder_chat.xml" value="0.16666666666666666" />
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/viewholder_contact.xml" value="0.3333333333333333" />
         <entry key="..\:/2022_2023/HK2/LTDD/CuoiKy/ChatApp/app/src/main/res/layout/viewholder_message.xml" value="0.2994791666666667" />

@@ -3,6 +3,7 @@ package com.example.chatapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText editTextEmail;
     EditText editTextPassword;
     TextView textViewLogin;
+    ImageView imageViewEye;
+    boolean isHintPassword = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -49,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         textViewLogin = findViewById(R.id.textViewLogin);
+        imageViewEye = findViewById(R.id.imageViewEye);
     }
 
     private  void SetListener(){
@@ -59,8 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = editTextPassword.getText().toString();
                 String name = editTextName.getText().toString();
                 if(TextUtils.isEmpty(name)){
-                    editTextPassword.setError("Please enter your name");
-                    editTextPassword.requestFocus();
+                    editTextName.setError("Please enter your name");
+                    editTextName.requestFocus();
                     return;
                 }
                 if(TextUtils.isEmpty(email)){
@@ -90,6 +94,22 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+        imageViewEye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isHintPassword){
+                    editTextPassword.setTransformationMethod(null);
+                    editTextPassword.setSelection(editTextPassword.getText().toString().length());
+                    imageViewEye.setImageResource(R.drawable.ic_baseline_remove_red_eye_active);
+                }
+                else {
+                    editTextPassword.setTransformationMethod(new PasswordTransformationMethod());
+                    editTextPassword.setSelection(editTextPassword.getText().toString().length());
+                    imageViewEye.setImageResource(R.drawable.ic_baseline_remove_red_eye_24_negative);
+                }
+                isHintPassword= !isHintPassword;
             }
         });
     }

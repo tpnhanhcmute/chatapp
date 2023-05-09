@@ -43,12 +43,11 @@ public class SettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         Mapping(view);
         SetListener();
-
         SetData();
         return view;
     }
 
-   private  void SetData(){
+    private  void SetData(){
        User user = SharedPreference.getInstance(getContext()).getUser();
        if(user.avatarUrl!= null)Glide.with(getContext()).load(user.avatarUrl).into(profile_image);
        if(user.email != null) textViewEmail.setText(user.email);
@@ -116,9 +115,9 @@ public class SettingFragment extends Fragment {
                     return;
                 }
                 SharedPreference.getInstance(getContext()).setUser(null);
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                Intent i = getContext().getPackageManager().getLaunchIntentForPackage( getContext().getPackageName() );
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
 
             @Override

@@ -1,5 +1,7 @@
 package com.example.chatapp.adapter;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,9 +10,11 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,11 +25,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.chatapp.common.DialogManager;
 import com.example.chatapp.common.FileType;
 import com.example.chatapp.common.SharedPreference;
 import com.example.chatapp.model.Message;
 import com.example.chatapp.R;
 import com.example.chatapp.model.User;
+import com.example.chatapp.model.request.RecallMessageRequest;
+import com.example.chatapp.model.response.ResponseModel;
+import com.example.chatapp.service.APIService;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -38,7 +46,9 @@ import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder>{
     public final int MESSAGE_RECEIVER =1;
@@ -47,12 +57,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     private List<Message> messageList;
     private  String otherName;
     private  String otherAvatarUrl;
+    private Activity activity;
+    private String userID;
 
-    public MessageAdapter(Context context, List<Message> messageList,String otherName,String avatarUrl) {
+    public MessageAdapter(Context context, List<Message> messageList,String otherName,String avatarUrl,String userID, Activity activity) {
         this.context = context;
         this.messageList = messageList;
         this.otherName = otherName;
         this.otherAvatarUrl = avatarUrl;
+        this.activity = activity;
+        this.userID = userID;
     }
 
     @NonNull
@@ -86,6 +100,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.MyViewHolder holder, int position) {
         Message message = messageList.get(position);
+        holder.message = message;
+
+        if(message.isRecall){
+            holder.imageViewPic.setVisibility(View.GONE);
+            holder.relativeLayoutFile.setVisibility(View.GONE);
+            holder.videoView.setVisibility(View.GONE);
+            holder.relativeLayoutFile.setVisibility(View.GONE);
+            holder.textViewMessageContent.setVisibility(View.VISIBLE);
+            holder.textViewMessageContent.setText("Message have recalled");
+            return;
+        }
         int indexPrevMessage = position-1;
         if(holder.nameSender!= null)
             holder.nameSender.setVisibility(View.VISIBLE);
@@ -205,7 +230,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder  {
-        public   String messageID;
+        public   Message message;
         public  int viewType;
         public TextView nameSender;
 
@@ -234,13 +259,72 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
              switch (viewType){
                  case MESSAGE_RECEIVER:
                      nameSender = (TextView)itemView.findViewById(R.id.senderName);
-
                      circleImageViewProfileImageInContentChat = (de.hdodenhof.circleimageview.CircleImageView) itemView.findViewById(R.id.profile_image_in_content_chat);
                      break;
                  case MESSAGE_SENDER:
                      imageViewSending = itemView.findViewById(R.id.imageViewSending);
+                     itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                         @Override
+                         public boolean onLongClick(View v) {
+                             if(message.messageID== null) return false;
+
+                             Dialog recallDialog = new Dialog(context);
+
+                             recallDialog.setContentView(R.layout.recall_message_dialog);
+                             recallDialog.setTitle("Recall Message");
+
+                             TextView textViewRecallAll = recallDialog.findViewById(R.id.textViewRecallAll);
+                             TextView textViewRecallMessage = recallDialog.findViewById(R.id.textViewRecallMessage);
+
+                             textViewRecallAll.setOnClickListener(new View.OnClickListener() {
+                                 @Override
+                                 public void onClick(View v) {
+                                     RecallMessageRequest recallMessageRequest = new RecallMessageRequest();
+                                     recallMessageRequest.isRecallAll = true;
+                                     recallMessageRequest.receiverID = userID;
+                                     recallMessageRequest.senderID = SharedPreference.getInstance(context).getUser().userID;
+                                     recallMessageRequest.messageID = message.messageID;
+                                     CallRecallMessage(recallMessageRequest);
+                                     recallDialog.dismiss();
+                                 }
+                             });
+                             textViewRecallMessage.setOnClickListener(new View.OnClickListener() {
+                                 @Override
+                                 public void onClick(View v) {
+
+                                     RecallMessageRequest recallMessageRequest = new RecallMessageRequest();
+                                     recallMessageRequest.receiverID = userID;
+                                     recallMessageRequest.isRecallAll = false;
+                                     recallMessageRequest.senderID = SharedPreference.getInstance(context).getUser().userID;
+                                     recallMessageRequest.messageID = message.messageID;
+                                     CallRecallMessage(recallMessageRequest);
+                                     recallDialog.dismiss();
+                                 }
+                             });
+
+                             recallDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                             recallDialog.getWindow().setGravity(Gravity.BOTTOM);
+                             recallDialog.show();
+                             return false;
+                         }
+                     });
                      break;
              }
         }
+    }
+
+    private void CallRecallMessage(RecallMessageRequest recallMessageRequest) {
+        APIService apiService = APIService.getAPIService();
+        DialogManager.GetInstance(activity).ShowLoading();
+        apiService.recallMessage(recallMessageRequest).enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                DialogManager.GetInstance(activity).HideLoading();
+            }
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                DialogManager.GetInstance(activity).HideLoading();
+            }
+        });
     }
 }

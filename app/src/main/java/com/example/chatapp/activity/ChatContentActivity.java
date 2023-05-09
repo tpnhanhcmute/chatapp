@@ -59,6 +59,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -125,6 +126,7 @@ public class ChatContentActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Message message = snapshot.getValue(Message.class);
+                message.messageID = snapshot.getKey();
                 messageList.add(message);
                 if(lastMessage != null)
                 {
@@ -135,9 +137,16 @@ public class ChatContentActivity extends AppCompatActivity {
             }
 
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                Message message = snapshot.getValue(Message.class);
+                message.messageID = snapshot.getKey();
+                Optional<Message>  oldMessage =  messageList.stream().filter(x->x.messageID.equals(message.messageID)).findFirst();
+                if(oldMessage.isPresent()){
+                    oldMessage.get().isRecall = message.isRecall;
+                }
+                messageAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -171,7 +180,7 @@ public class ChatContentActivity extends AppCompatActivity {
     }
     private  void LoadListMessage(){
         messageList = new ArrayList<Message>();
-        messageAdapter = new MessageAdapter(this, messageList,chat.name, chat.avatarUrl);
+        messageAdapter = new MessageAdapter(this, messageList,chat.name, chat.avatarUrl,chat.userID, this);
         rcMessage.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getApplicationContext(),
@@ -220,7 +229,8 @@ public class ChatContentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String content = editTextMessage.getText().toString();
-                if(TextUtils.isEmpty(content)){return;}
+                if(TextUtils.isEmpty(content) && mUri == null){return;}
+
                 SendMessageRequest sendMessageRequest = new SendMessageRequest();
                 sendMessageRequest.senderID = SharedPreference.getInstance(getApplicationContext()).getUser().userID;
                 sendMessageRequest.receiverID = chat.userID;

@@ -5,6 +5,7 @@ import android.net.Uri;
 import java.util.Date;
 
 public class Message implements  Cloneable {
+    public String messageID;
     public String senderID;
     public  String content;
     public  String fileType;

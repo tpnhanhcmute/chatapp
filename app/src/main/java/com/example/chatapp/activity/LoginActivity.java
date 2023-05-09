@@ -3,6 +3,7 @@ package com.example.chatapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,12 +36,15 @@ public class LoginActivity  extends AppCompatActivity {
     EditText editTextEmail;
     EditText editTextPassword;
     TextView textViewRegister;
+    ImageView imageViewEye;
+    boolean isHintPassword = true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Mapping();
         SetListener();
         LoginWithExitedAccount();
+        isHintPassword = true;
     }
 
     private void LoginWithExitedAccount() {
@@ -85,6 +89,22 @@ public class LoginActivity  extends AppCompatActivity {
 
             }
         });
+        imageViewEye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isHintPassword){
+                    editTextPassword.setTransformationMethod(null);
+                    editTextPassword.setSelection(editTextPassword.getText().toString().length());
+                    imageViewEye.setImageResource(R.drawable.ic_baseline_remove_red_eye_active);
+                }
+                else {
+                    editTextPassword.setTransformationMethod(new PasswordTransformationMethod());
+                    editTextPassword.setSelection(editTextPassword.getText().toString().length());
+                    imageViewEye.setImageResource(R.drawable.ic_baseline_remove_red_eye_24_negative);
+                }
+                isHintPassword= !isHintPassword;
+            }
+        });
     }
 
     private void Login(String email, String password) {
@@ -97,7 +117,7 @@ public class LoginActivity  extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Cant get device token",Toast.LENGTH_SHORT).show();
             return;
         }
-        DialogManager.GetInstance(this).ShowLoading();
+        DialogManager.GetInstance(LoginActivity.this).ShowLoading();
         apiService.login(loginRequest).enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
@@ -136,5 +156,6 @@ public class LoginActivity  extends AppCompatActivity {
         editTextEmail= findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         textViewRegister = findViewById(R.id.textViewRegister);
+        imageViewEye = findViewById(R.id.imageViewEye);
     }
 }
