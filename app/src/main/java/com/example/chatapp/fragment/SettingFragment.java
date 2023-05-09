@@ -12,15 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.chatapp.activity.EditProfileActivity;
 import com.example.chatapp.activity.LoginActivity;
 import com.example.chatapp.R;
+import com.example.chatapp.common.DialogManager;
 import com.example.chatapp.common.SharedPreference;
 import com.example.chatapp.model.User;
+import com.example.chatapp.model.request.LogoutRequest;
+import com.example.chatapp.model.response.ResponseModel;
+import com.example.chatapp.service.APIService;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SettingFragment extends Fragment {
     LinearLayout linearLayoutLogout;
@@ -72,10 +80,8 @@ public class SettingFragment extends Fragment {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SharedPreference.getInstance(getContext()).setUser(null);
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+
+                        Logout();
                     }
                 });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -86,6 +92,41 @@ public class SettingFragment extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void Logout() {
+        APIService apiService = APIService.getAPIService();
+        LogoutRequest logoutRequest = new LogoutRequest();
+        logoutRequest.userID = SharedPreference.getInstance(getContext()).getUser().userID;
+        logoutRequest.deviceToken = SharedPreference.getInstance(getContext()).getDeviceToken();
+        DialogManager.GetInstance(SettingFragment.this.getActivity()).ShowLoading();
+        apiService.logout(logoutRequest).enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+
+                DialogManager.GetInstance(SettingFragment.this.getActivity()).HideLoading();
+                if(!response.isSuccessful()) {
+                    if(response.body()!= null){
+                        Toast.makeText(getContext(),response.body().message, Toast.LENGTH_SHORT).show();
+                    }
+                    return;
+                }
+                if(response.body().isError) {
+                    Toast.makeText(getContext(),response.body().message, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                SharedPreference.getInstance(getContext()).setUser(null);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                DialogManager.GetInstance(SettingFragment.this.getActivity()).HideLoading();
+            }
+        });
+
     }
 
     private void Mapping(View view) {

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.chatapp.R;
+import com.example.chatapp.common.DialogManager;
 import com.example.chatapp.common.SharedPreference;
 import com.example.chatapp.model.User;
 import com.example.chatapp.model.request.LoginRequest;
@@ -96,9 +97,11 @@ public class LoginActivity  extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Cant get device token",Toast.LENGTH_SHORT).show();
             return;
         }
+        DialogManager.GetInstance(this).ShowLoading();
         apiService.login(loginRequest).enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                DialogManager.GetInstance(LoginActivity.this).HideLoading();
                 if(!response.isSuccessful()) {
                     if(response.body()!= null){
                         Toast.makeText(getApplicationContext(),response.body().message, Toast.LENGTH_SHORT).show();
@@ -119,6 +122,7 @@ public class LoginActivity  extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
+                DialogManager.GetInstance(LoginActivity.this).HideLoading();
                 Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

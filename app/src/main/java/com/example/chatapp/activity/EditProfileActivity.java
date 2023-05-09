@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.chatapp.R;
+import com.example.chatapp.common.DialogManager;
 import com.example.chatapp.common.FileType;
 import com.example.chatapp.common.SharedPreference;
 import com.example.chatapp.model.User;
@@ -105,12 +106,12 @@ public class EditProfileActivity  extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),"You press update profie", Toast.LENGTH_SHORT).show();
                 if(mUri != null){
                     String userID = SharedPreference.getInstance(getApplicationContext()).getUser().userID;
                     OnSuccessListener<String> onSuccessListener = new OnSuccessListener<String>() {
                         @Override
                         public void onSuccess(String url) {
+                            DialogManager.GetInstance(EditProfileActivity.this).HideLoading();
                             avatarUrl= url;
                             CallAPIUpdateProfile();
                             mUri= null;
@@ -119,9 +120,10 @@ public class EditProfileActivity  extends AppCompatActivity {
                     OnFailureListener onFailureListener = new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-
+                            DialogManager.GetInstance(EditProfileActivity.this).HideLoading();
                         }
                     };
+                    DialogManager.GetInstance(EditProfileActivity.this).ShowLoading();
                     FirebaseService.getInstance().UploadFile(mUri, FileType.IMAGE,userID,
                             onSuccessListener,
                             onFailureListener);
@@ -147,14 +149,17 @@ public class EditProfileActivity  extends AppCompatActivity {
         updateInfoRequest.name = name;
         updateInfoRequest.phoneNumber =phoneNumber;
         updateInfoRequest.userID = SharedPreference.getInstance(getApplicationContext()).getUser().userID;
+
         UpdateProfile(updateInfoRequest);
     }
 
     private void UpdateProfile(UpdateInfoRequest updateInfoRequest) {
         APIService apiService = APIService.getAPIService();
+        DialogManager.GetInstance(this).ShowLoading();
         apiService.updateInfo(updateInfoRequest).enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                DialogManager.GetInstance(EditProfileActivity.this).HideLoading();
                 if(!response.isSuccessful()) {
                     if(response.body()!= null){
                         Toast.makeText(getApplicationContext(),response.body().message, Toast.LENGTH_SHORT).show();
@@ -176,7 +181,7 @@ public class EditProfileActivity  extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
-
+                DialogManager.GetInstance(EditProfileActivity.this).HideLoading();
             }
         });
     }

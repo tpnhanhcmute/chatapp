@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.chatapp.R;
 import com.example.chatapp.common.Const;
+import com.example.chatapp.common.DialogManager;
 import com.example.chatapp.model.request.RegisterRequest;
 import com.example.chatapp.model.response.RegisterResponse;
 import com.example.chatapp.model.response.ResponseModel;
@@ -99,9 +100,11 @@ public class RegisterActivity extends AppCompatActivity {
         registerRequest.email = email;
         registerRequest.password = password;
         APIService apiService = APIService.getAPIService();
+        DialogManager.GetInstance(this).ShowLoading();
         apiService.register(registerRequest).enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                DialogManager.GetInstance(RegisterActivity.this).HideLoading();
                 if(!response.isSuccessful()) {
                     if(response.body()!= null){
                         Toast.makeText(getApplicationContext(),response.body().message, Toast.LENGTH_SHORT).show();
@@ -124,6 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
+                DialogManager.GetInstance(RegisterActivity.this).HideLoading();
                 Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
