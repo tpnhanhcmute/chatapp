@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.chatapp.R;
 import com.example.chatapp.common.Const;
+import com.example.chatapp.common.DialogManager;
 import com.example.chatapp.model.request.ResendOTPRequest;
 import com.example.chatapp.model.request.UserRequest;
 import com.example.chatapp.model.response.RegisterResponse;
@@ -177,9 +178,11 @@ public class OTPVerifyActivity extends AppCompatActivity {
         APIService apiService = APIService.getAPIService();
         UserRequest userRequest = new UserRequest();
         userRequest.userID = getIntent().getStringExtra(Const.USER_ID);
+        DialogManager.GetInstance(this).ShowLoading();
         apiService.authenticate(userRequest).enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                DialogManager.GetInstance(OTPVerifyActivity.this).HideLoading();
                 if(!response.isSuccessful()) {
                     if(response.body()!= null){
                         Toast.makeText(getApplicationContext(),response.body().message, Toast.LENGTH_SHORT).show();
@@ -192,12 +195,13 @@ public class OTPVerifyActivity extends AppCompatActivity {
                 }
 
                 Intent intent = new Intent(OTPVerifyActivity.this,LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                finish();
             }
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
+                DialogManager.GetInstance(OTPVerifyActivity.this).HideLoading();
                 Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

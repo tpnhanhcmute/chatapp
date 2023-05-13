@@ -138,6 +138,7 @@ public class LoginActivity  extends AppCompatActivity {
                 SharedPreference.getInstance(getApplicationContext()).setUser(user);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override
